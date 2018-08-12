@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="fluid.symfonyTemplatePaths" class="OmegaCode\FluidIntegration\Fluid\SymfonyTemplatePaths">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="fluid.templateViewFactory" class="OmegaCode\FluidIntegration\TemplateViewFactory" />
+
+        <service id="fluid.template_view" class="TYPO3Fluid\Fluid\View\TemplateView">
+            <factory service="fluid.templateViewFactory" method="createTemplateView"/>
+            <argument type="service" id="service_container" />
+            <argument type="service" id="fluid.symfonyTemplatePaths" />
+        </service>
+
+        <service id="templating.engine.fluid" class="OmegaCode\FluidIntegration\FluidEngine">
+            <argument type="service" id="fluid.template_view" />
+            <argument type="service" id="templating.name_parser"/>
+            <argument type="service" id="service_container" />
+            <tag name="templating.engine" />
+            <tag name="monolog.logger" channel="FluidBundle" />
+        </service>
+
+    </services>
+</container>
