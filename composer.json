@@ -1,0 +1,23 @@
+{
+    "name": "omegacode/symfony-fluid-integration",
+    "type": "symfony-bundle",
+    "description": "Integrates the template engine fluid into symfony 4 projects.",
+    "homepage": "https://github.com/alphajunge/symfony-fluid-integration",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Wolf Utz",
+            "email": "wpu@hotmail.de"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "^4.1",
+        "symfony/templating": "^4.1",
+        "typo3fluid/fluid": "^2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "OmegaCode\\FluidIntegration\\": "src"
+        }
+    }
+}
