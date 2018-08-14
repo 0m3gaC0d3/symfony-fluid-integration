@@ -31,3 +31,21 @@ return [
     ...
 ];
 ```` 
+You are now able to render fluid templates in your controller:
+````php
+class DemoController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
+{
+    public function indexAction()
+    {
+        return $this->render('demo/index.html', [
+            'var' => 'val'
+        ]);
+    }
+}
+```` 
+Currently the root paths are declared as follows:
+* templates: ``res/private/templates``
+* partials: ``res/private/partials``
+* layouts: ``res/private/layouts``
+
+This will be configurable in later versions.
