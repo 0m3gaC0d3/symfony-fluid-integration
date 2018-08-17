@@ -1,0 +1,5 @@
+omega_code_fluid_integration:
+  cache_dir: 'var/cache/fluid'
+  templates_root_path: 'templates/view/templates'
+  layouts_root_path: 'templates/view/layouts'
+  partials_root_path: 'templates/view/partials'

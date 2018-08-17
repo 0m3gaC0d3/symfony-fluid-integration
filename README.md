@@ -11,10 +11,11 @@ Open the file ``config/services.yaml`` and add the following:
 services:
   templating.engine.fluid:
     public: true
-    autowire: false
+    autowire: true
     class: OmegaCode\FluidIntegration\FluidEngine
     arguments:
     - '@kernel'
+    - '@omega_code_fluid_integration.settings'
 ````
 Next, open the file ``config/packages/framework.yaml`` and add the following:
 ````yaml

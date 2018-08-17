@@ -22,6 +22,7 @@
 
 namespace OmegaCode\FluidIntegration;
 
+use OmegaCode\FluidIntegration\Configuration\Settings;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,7 @@ use Symfony\Component\Templating\TemplateNameParser;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 use TYPO3Fluid\Fluid\View\TemplateView;
+use TYPO3Fluid\Fluid\Core\Cache\SimpleFileCache;
 
 /**
  * Class FluidEngine.
@@ -59,16 +61,24 @@ class FluidEngine implements EngineInterface
     protected $kernel;
 
     /**
+     * @var Settings
+     */
+    protected $settings;
+
+    /**
      * FluidEngine constructor.
      *
      * @param \App\Kernel $kernel
+     * @param Settings    $settings
      */
-    public function __construct($kernel)
+    public function __construct($kernel, Settings $settings)
     {
         $this->kernel = $kernel;
         $this->container = $kernel->getContainer();
+        $this->settings = $settings;
         $this->fluid = $this->setRootPaths(new TemplateView());
         $this->nameParser = new TemplateNameParser();
+        $this->setupCache();
     }
 
     /**
@@ -160,7 +170,25 @@ class FluidEngine implements EngineInterface
         $controller = $nameParts[0];
         $action = $nameParts[1];
 
-        return $this->fluid->getTemplatePaths()->resolveTemplateFileForControllerAndActionAndFormat($controller, $action);
+        return $this->fluid->getTemplatePaths()->resolveTemplateFileForControllerAndActionAndFormat(
+            $controller,
+            $action
+        );
+    }
+
+    /**
+     * Sets and enables the caching of fluid, if the application is in production.
+     */
+    private function setupCache()
+    {
+        if (empty($this->settings->getCacheDir()) || 'prod' != $_SERVER['APP_ENV']) {
+            return;
+        }
+        $cacheDirPath = $this->kernel->getRootDir().'/../'.$this->settings->getCacheDir();
+        if (!is_dir($cacheDirPath)) {
+            mkdir($cacheDirPath);
+        }
+        $this->fluid->setCache(new SimpleFileCache($cacheDirPath));
     }
 
     /**
@@ -170,9 +198,15 @@ class FluidEngine implements EngineInterface
      */
     private function setRootPaths(TemplateView $templateView)
     {
-        $templateView->getTemplatePaths()->setTemplateRootPaths([$this->kernel->getRootDir().'/../res/private/templates']);
-        $templateView->getTemplatePaths()->setLayoutRootPaths([$this->kernel->getRootDir().'/../res/private/layouts']);
-        $templateView->getTemplatePaths()->setPartialRootPaths([$this->kernel->getRootDir().'/../res/private/partials']);
+        $templateView->getTemplatePaths()->setTemplateRootPaths(
+            [$this->kernel->getRootDir().'/../'.$this->settings->getTemplatesRootPath()]
+        );
+        $templateView->getTemplatePaths()->setLayoutRootPaths(
+            [$this->kernel->getRootDir().'/../'.$this->settings->getLayoutsRootPath()]
+        );
+        $templateView->getTemplatePaths()->setPartialRootPaths(
+            [$this->kernel->getRootDir().'/../'.$this->settings->getPartialsRootPath()]
+        );
 
         return $templateView;
     }
