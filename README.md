@@ -48,5 +48,3 @@ Currently the root paths are declared as follows:
 * templates: ``res/private/templates``
 * partials: ``res/private/partials``
 * layouts: ``res/private/layouts``
-
-This will be configurable in later versions.
