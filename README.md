@@ -43,8 +43,4 @@ class DemoController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
         ]);
     }
 }
-```` 
-Currently the root paths are declared as follows:
-* templates: ``res/private/templates``
-* partials: ``res/private/partials``
-* layouts: ``res/private/layouts``
+````
