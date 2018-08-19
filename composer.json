@@ -20,5 +20,8 @@
         "psr-4": {
             "OmegaCode\\FluidIntegration\\": "src"
         }
+    },
+    "require-dev": {
+        "typo3/fluid-schema-generator": "^2.1"
     }
 }

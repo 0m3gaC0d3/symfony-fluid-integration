@@ -23,6 +23,7 @@
 namespace OmegaCode\FluidIntegration;
 
 use OmegaCode\FluidIntegration\Configuration\Settings;
+use OmegaCode\FluidIntegration\Context\RenderingContext;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,7 +77,9 @@ class FluidEngine implements EngineInterface
         $this->kernel = $kernel;
         $this->container = $kernel->getContainer();
         $this->settings = $settings;
-        $this->fluid = $this->setRootPaths(new TemplateView());
+        $this->fluid = new TemplateView();
+        $this->fluid->setRenderingContext(new RenderingContext($this->fluid, $this->container));
+        $this->fluid = $this->setRootPaths($this->fluid);
         $this->nameParser = new TemplateNameParser();
         $this->setupCache();
     }

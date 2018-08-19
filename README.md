@@ -16,7 +16,7 @@ services:
     arguments:
     - '@kernel'
     - '@omega_code_fluid_integration.settings'
-````
+´
 Next, open the file ``config/packages/framework.yaml`` and add the following:
 ````yaml
 framework:
@@ -44,3 +44,6 @@ class DemoController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
     }
 }
 ````
+## View helper - Auto complete for your IDE
+To enable auto complete in your IDE for the custom symfony-fluid-integration view helpers,
+add the following URL:`http://omega-code.de/ViewHelperSchemas/schema.xsd`
