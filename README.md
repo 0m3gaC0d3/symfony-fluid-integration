@@ -16,7 +16,7 @@ services:
     arguments:
     - '@kernel'
     - '@omega_code_fluid_integration.settings'
-´
+````
 Next, open the file ``config/packages/framework.yaml`` and add the following:
 ````yaml
 framework:
