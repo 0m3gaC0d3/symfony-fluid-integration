@@ -14,7 +14,8 @@
         "symfony/framework-bundle": "^4.1",
         "symfony/templating": "^4.1",
         "symfony/yaml": "^4.1",
-        "typo3fluid/fluid": "^2.5"
+        "typo3fluid/fluid": "^2.5",
+        "kint-php/kint": "^2.2"
     },
     "autoload": {
         "psr-4": {

@@ -20,16 +20,17 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace OmegaCode\FluidIntegration\ViewHelpers;
+namespace OmegaCode\FluidIntegration\ViewHelpers\Uri;
 
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Class RouteViewHelper.
+ *
  * @TODO: Add possibility to add GET params. (additionalParameters)
  */
-class RouteViewHelper extends AbstractTagBasedViewHelper
+class RouteViewHelper extends AbstractViewHelper
 {
     /**
      * @var string
@@ -44,7 +45,6 @@ class RouteViewHelper extends AbstractTagBasedViewHelper
         parent::initializeArguments();
         $this->registerArgument('name', 'string', 'The route name whose route should be generated', true);
         $this->registerArgument('arguments', 'array', 'The route arguments', false, []);
-        $this->registerTagAttribute('class', 'string', 'tag classes');
         $this->registerArgument('anchor', 'string', 'The anchor to be added to the URI.', false);
     }
 
@@ -59,10 +59,7 @@ class RouteViewHelper extends AbstractTagBasedViewHelper
             $this->arguments['name'],
             $this->arguments['arguments']
         );
-        $url = (!empty($this->arguments['anchor'])) ? $url.'#'.$this->arguments['anchor'] : $url;
-        $this->tag->setContent($this->renderChildren());
-        $this->tag->addAttribute('href', $url);
 
-        return $this->tag->render();
+        return (!empty($this->arguments['anchor'])) ? $url.'#'.$this->arguments['anchor'] : $url;
     }
 }
