@@ -50,7 +50,7 @@ class CsfrTokenViewHelper extends AbstractViewHelper
     public function render()
     {
         /** @var CsrfTokenManager $tokenProvider */
-        $tokenProvider = $this->container->get('security.csrf.token_manager');
+        $tokenProvider = $this->renderingContext->getContainer()->get('security.csrf.token_manager');
         $token = $tokenProvider->getToken($this->arguments['type'])->getValue();
 
         return (string) $token;
