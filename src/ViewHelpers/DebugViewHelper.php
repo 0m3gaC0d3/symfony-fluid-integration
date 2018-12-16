@@ -29,6 +29,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class DebugViewHelper extends AbstractViewHelper
 {
+    /**
+     * @var bool
+     */
     protected $escapeOutput = false;
 
     /**
@@ -47,8 +50,10 @@ class DebugViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $title = '<p><b>'.$this->arguments['title'].'</b></p>';
+        $title = '<p style="text-align: center; color: white"><b>'.$this->arguments['title'].'</b></p>';
 
-        return $title.@\Kint::dump($this->arguments['var']);
+        return "<div class='debug-wrapper' style='background-color: gray'>".
+            $title.@\Kint::dump($this->arguments['var']).
+            '</div>';
     }
 }
